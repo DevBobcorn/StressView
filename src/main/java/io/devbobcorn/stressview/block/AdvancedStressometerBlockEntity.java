@@ -93,13 +93,13 @@ public class AdvancedStressometerBlockEntity extends KineticBlockEntity {
             float cap = network.getActualCapacityOf(be);
             StressEntry prev = sourcesGrouped.get(key);
             if (prev != null)
-                sourcesGrouped.put(key, new StressEntry(descId, prev.count + 1, prev.value + cap, rpm));
+                sourcesGrouped.put(key, new StressEntry(descId, prev.count + 1, cap, rpm));
             else
                 sourcesGrouped.put(key, new StressEntry(descId, 1, cap, rpm));
         }
         sourceEntries.clear();
         sourceEntries.addAll(sourcesGrouped.values());
-        sourceEntries.sort((a, b) -> Float.compare(b.value, a.value));
+        sourceEntries.sort((a, b) -> Float.compare(b.value * b.count, a.value * a.count));
 
         Map<String, StressEntry> consumersGrouped = new LinkedHashMap<>();
         for (KineticBlockEntity be : network.members.keySet()) {
@@ -111,13 +111,13 @@ public class AdvancedStressometerBlockEntity extends KineticBlockEntity {
             String key = descId + "|" + rpm;
             StressEntry prev = consumersGrouped.get(key);
             if (prev != null)
-                consumersGrouped.put(key, new StressEntry(descId, prev.count + 1, prev.value + actualStress, rpm));
+                consumersGrouped.put(key, new StressEntry(descId, prev.count + 1, actualStress, rpm));
             else
                 consumersGrouped.put(key, new StressEntry(descId, 1, actualStress, rpm));
         }
         consumerEntries.clear();
         consumerEntries.addAll(consumersGrouped.values());
-        consumerEntries.sort((a, b) -> Float.compare(b.value, a.value));
+        consumerEntries.sort((a, b) -> Float.compare(b.value * b.count, a.value * a.count));
     }
 
     @Override
@@ -173,15 +173,14 @@ public class AdvancedStressometerBlockEntity extends KineticBlockEntity {
         LangBuilder su = CreateLang.translate("generic.unit.stress");
 
         if (!sourceEntries.isEmpty()) {
-            CreateLang.text("Producing")
+            CreateLang.builder().add(Component.translatable("stressview.gui.stressometer.producing"))
                 .style(ChatFormatting.GRAY)
                 .forGoggles(tooltip);
 
             for (StressEntry entry : sourceEntries) {
                 LangBuilder line = CreateLang.builder()
                     .add(Component.translatable(entry.descriptionId));
-                if (entry.count > 1)
-                    line.text(ChatFormatting.DARK_GRAY, " \u00d7" + entry.count);
+                
                 line.text(ChatFormatting.DARK_GRAY, " (")
                     .add(CreateLang.number(entry.rpm)
                         .style(ChatFormatting.YELLOW))
@@ -189,20 +188,23 @@ public class AdvancedStressometerBlockEntity extends KineticBlockEntity {
                     .add(CreateLang.number(entry.value)
                         .add(su)
                         .style(ChatFormatting.GREEN));
+                
+                if (entry.count > 1)
+                    line.text(ChatFormatting.DARK_GRAY, " \u00d7" + entry.count);
+                
                 line.forGoggles(tooltip, 1);
             }
         }
 
         if (!consumerEntries.isEmpty()) {
-            CreateLang.text("Consuming")
+            CreateLang.builder().add(Component.translatable("stressview.gui.stressometer.consuming"))
                 .style(ChatFormatting.GRAY)
                 .forGoggles(tooltip);
 
             for (StressEntry entry : consumerEntries) {
                 LangBuilder line = CreateLang.builder()
                     .add(Component.translatable(entry.descriptionId));
-                if (entry.count > 1)
-                    line.text(ChatFormatting.DARK_GRAY, " \u00d7" + entry.count);
+
                 line.text(ChatFormatting.DARK_GRAY, " (")
                     .add(CreateLang.number(entry.rpm)
                         .style(ChatFormatting.YELLOW))
@@ -210,6 +212,10 @@ public class AdvancedStressometerBlockEntity extends KineticBlockEntity {
                     .add(CreateLang.number(entry.value)
                         .add(su)
                         .style(ChatFormatting.AQUA));
+
+                if (entry.count > 1)
+                    line.text(ChatFormatting.DARK_GRAY, " \u00d7" + entry.count);
+                
                 line.forGoggles(tooltip, 1);
             }
         }
@@ -227,8 +233,7 @@ public class AdvancedStressometerBlockEntity extends KineticBlockEntity {
     public void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
         compound.putFloat("Value", dialTarget);
         compound.putInt("Color", color);
-        if (clientPacket)
-            writeBreakdown(compound);
+        writeBreakdown(compound);
         super.write(compound, registries, clientPacket);
     }
 
@@ -236,8 +241,7 @@ public class AdvancedStressometerBlockEntity extends KineticBlockEntity {
     protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
         dialTarget = compound.getFloat("Value");
         color = compound.getInt("Color");
-        if (clientPacket)
-            readBreakdown(compound);
+        readBreakdown(compound);
         super.read(compound, registries, clientPacket);
     }
 
