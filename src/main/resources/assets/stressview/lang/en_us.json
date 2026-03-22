@@ -1,7 +1,5 @@
 {
-  "itemGroup.stressview": "Example Mod Tab",
-  "block.stressview.example_block": "Example Block",
-  "item.stressview.example_item": "Example Item",
+  "itemGroup.stressview": "Stress View",
   "block.stressview.advanced_stressometer": "Advanced Stressometer",
 
   "stressview.configuration.title": "Example Mod Configs",
