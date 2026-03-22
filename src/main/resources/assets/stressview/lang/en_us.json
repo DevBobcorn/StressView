@@ -1,0 +1,14 @@
+{
+  "itemGroup.stressview": "Example Mod Tab",
+  "block.stressview.example_block": "Example Block",
+  "item.stressview.example_item": "Example Item",
+  "block.stressview.advanced_stressometer": "Advanced Stressometer",
+
+  "stressview.configuration.title": "Example Mod Configs",
+  "stressview.configuration.section.stressview.common.toml": "Example Mod Configs",
+  "stressview.configuration.section.stressview.common.toml.title": "Example Mod Configs",
+  "stressview.configuration.items": "Item List",
+  "stressview.configuration.logDirtBlock": "Log Dirt Block",
+  "stressview.configuration.magicNumberIntroduction": "Magic Number Text",
+  "stressview.configuration.magicNumber": "Magic Number"
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis_along_first=false,facing=down":  { "model": "stressview:block/advanced_stressometer/block", "x": 180 },
+    "axis_along_first=false,facing=east":  { "model": "stressview:block/advanced_stressometer/block", "x": 90, "y": 90 },
+    "axis_along_first=false,facing=north": { "model": "stressview:block/advanced_stressometer/block", "x": 90 },
+    "axis_along_first=false,facing=south": { "model": "stressview:block/advanced_stressometer/block", "x": 90, "y": 180 },
+    "axis_along_first=false,facing=up":    { "model": "stressview:block/advanced_stressometer/block" },
+    "axis_along_first=false,facing=west":  { "model": "stressview:block/advanced_stressometer/block", "x": 90, "y": 270 },
+    "axis_along_first=true,facing=down":   { "model": "stressview:block/advanced_stressometer/block", "x": 180, "y": 90 },
+    "axis_along_first=true,facing=east":   { "model": "stressview:block/advanced_stressometer/block", "x": 90, "y": 90 },
+    "axis_along_first=true,facing=north":  { "model": "stressview:block/advanced_stressometer/block", "x": 90 },
+    "axis_along_first=true,facing=south":  { "model": "stressview:block/advanced_stressometer/block", "x": 90, "y": 180 },
+    "axis_along_first=true,facing=up":     { "model": "stressview:block/advanced_stressometer/block", "y": 90 },
+    "axis_along_first=true,facing=west":   { "model": "stressview:block/advanced_stressometer/block", "x": 90, "y": 270 }
+  }
+}
