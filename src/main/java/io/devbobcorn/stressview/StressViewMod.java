@@ -16,8 +16,10 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -52,7 +54,10 @@ public class StressViewMod {
             BLOCKS.register("advanced_stressometer",
                     () -> new AdvancedStressometerBlock(BlockBehaviour.Properties.of()
                             .mapColor(MapColor.PODZOL)
-                            .strength(3.0f, 3.0f)
+                            .instrument(NoteBlockInstrument.BASS)
+                            .strength(2.0F)
+                            .sound(SoundType.WOOD)
+                            .ignitedByLava()
                             .noOcclusion()));
 
     public static final DeferredItem<BlockItem> ADVANCED_STRESSOMETER_ITEM =
@@ -71,8 +76,7 @@ public class StressViewMod {
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> ADVANCED_STRESSOMETER_ITEM.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
-                output.accept(ADVANCED_STRESSOMETER_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-                output.accept(ADVANCED_STRESSOMETER_ITEM.get());
+                output.accept(ADVANCED_STRESSOMETER_ITEM.get()); // Add the Advanced Stressometer item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -112,11 +116,7 @@ public class StressViewMod {
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        /*
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(ADVANCED_STRESSOMETER_ITEM);
-        }
-        */
+        
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
