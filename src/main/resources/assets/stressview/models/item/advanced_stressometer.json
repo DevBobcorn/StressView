@@ -4,8 +4,9 @@
 	"textures": {
 		"0": "create:block/axis",
 		"1": "create:block/axis_top",
-		"2": "stressview:block/gauge",
-		"particle": "stressview:block/gauge"
+		"2": "create:block/gauge",
+		"3": "stressview:block/faces_smile",
+		"particle": "create:block/gauge"
 	},
 	"elements": [
 		{
@@ -40,7 +41,7 @@
 			"to": [16.075, 12, 12],
 			"rotation": {"angle": 0, "axis": "y", "origin": [9, 8, 8]},
 			"faces": {
-				"east": {"uv": [12, 0, 16, 4], "texture": "#2"}
+				"east": {"uv": [2, 2, 14, 14], "texture": "#3"}
 			}
 		},
 		{

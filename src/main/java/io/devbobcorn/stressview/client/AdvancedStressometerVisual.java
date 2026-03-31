@@ -34,7 +34,7 @@ public class AdvancedStressometerVisual extends ShaftVisual<AdvancedStressometer
         AdvancedStressometerBlock block = (AdvancedStressometerBlock) blockState.getBlock();
 
         var headInstancer = instancerProvider().instancer(InstanceTypes.TRANSFORMED,
-                Models.partial(StressViewPartialModels.ADV_STRESSOMETER_HEAD));
+                Models.partial(StressViewPartialModels.ADV_STRESSOMETER_HEAD_SMILE));
 
         var msr = TransformStack.of(ms);
         msr.translate(getVisualPosition());
