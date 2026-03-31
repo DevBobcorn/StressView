@@ -1,3 +1,5 @@
+![banner.png](banner.png)
+
 # StressView
 
 This mod introduces an advanced variant of Stressometer from [Create](https://github.com/Creators-of-Create/Create).
