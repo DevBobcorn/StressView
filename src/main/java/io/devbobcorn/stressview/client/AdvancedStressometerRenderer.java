@@ -33,7 +33,7 @@ public class AdvancedStressometerRenderer extends ShaftRenderer<AdvancedStressom
 
         BlockState blockState = be.getBlockState();
         SuperByteBuffer headBuffer =
-            CachedBuffers.partial(StressViewPartialModels.ADV_STRESSOMETER_HEAD_SMILE, blockState);
+            CachedBuffers.partial(StressViewPartialModels.getAdvancedStressometerHead(be.dialTarget), blockState);
 
         for (Direction facing : Iterate.directions) {
             if (!((AdvancedStressometerBlock) blockState.getBlock())

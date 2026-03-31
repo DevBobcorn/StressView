@@ -16,6 +16,7 @@ import dev.engine_room.flywheel.lib.instance.FlatLit;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.TransformedInstance;
 import dev.engine_room.flywheel.lib.model.Models;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
 import net.createmod.catnip.data.Iterate;
@@ -25,17 +26,25 @@ public class AdvancedStressometerVisual extends ShaftVisual<AdvancedStressometer
         implements SimpleDynamicVisual {
 
     protected final ArrayList<HeadFace> faces = new ArrayList<>(2);
-    protected final PoseStack ms = new PoseStack();
+    protected PartialModel currentHeadModel;
 
     public AdvancedStressometerVisual(VisualizationContext context,
             AdvancedStressometerBlockEntity blockEntity, float partialTick) {
         super(context, blockEntity, partialTick);
+        currentHeadModel = StressViewPartialModels.getAdvancedStressometerHead(blockEntity.dialTarget);
+        rebuildFaces();
+    }
+
+    protected void rebuildFaces() {
+        faces.forEach(HeadFace::delete);
+        faces.clear();
 
         AdvancedStressometerBlock block = (AdvancedStressometerBlock) blockState.getBlock();
 
         var headInstancer = instancerProvider().instancer(InstanceTypes.TRANSFORMED,
-                Models.partial(StressViewPartialModels.ADV_STRESSOMETER_HEAD_SMILE));
+                Models.partial(currentHeadModel));
 
+        PoseStack ms = new PoseStack();
         var msr = TransformStack.of(ms);
         msr.translate(getVisualPosition());
 
@@ -45,18 +54,28 @@ public class AdvancedStressometerVisual extends ShaftVisual<AdvancedStressometer
 
             HeadFace face = new HeadFace(facing, headInstancer.createInstance());
             faces.add(face);
-            face.setupTransform(msr);
+            face.setupTransform(msr, ms);
         }
+
+        relightFaces();
     }
 
     @Override
     public void beginFrame(DynamicVisual.Context ctx) {
-        // No animated parts yet; head instances are static.
+        PartialModel headModel = StressViewPartialModels.getAdvancedStressometerHead(blockEntity.dialTarget);
+        if (headModel != currentHeadModel) {
+            currentHeadModel = headModel;
+            rebuildFaces();
+        }
     }
 
     @Override
     public void updateLight(float partialTick) {
         super.updateLight(partialTick);
+        relightFaces();
+    }
+
+    protected void relightFaces() {
         relight(faces.stream()
                 .map(f -> f.instance)
                 .toArray(FlatLit[]::new));
@@ -85,7 +104,7 @@ public class AdvancedStressometerVisual extends ShaftVisual<AdvancedStressometer
             this.instance = instance;
         }
 
-        void setupTransform(TransformStack<?> msr) {
+        void setupTransform(TransformStack<?> msr, PoseStack ms) {
             msr.pushPose();
             rotateToFace(msr);
             instance.setTransform(ms).setChanged();
