@@ -2,14 +2,6 @@
   "itemGroup.stressview": "Create: Stress View",
   "block.stressview.advanced_stressometer": "Advanced Stressometer",
 
-  "stressview.configuration.title": "Stress View Configs",
-  "stressview.configuration.section.stressview.common.toml": "Stress View Configs",
-  "stressview.configuration.section.stressview.common.toml.title": "Stress View Configs",
-  "stressview.configuration.items": "Item List",
-  "stressview.configuration.logDirtBlock": "Log Dirt Block",
-  "stressview.configuration.magicNumberIntroduction": "Magic Number Text",
-  "stressview.configuration.magicNumber": "Magic Number",
-
   "stressview.gui.stressometer.producing": "Producing",
   "stressview.gui.stressometer.consuming": "Consuming"
 }

@@ -2,14 +2,6 @@
   "itemGroup.stressview": "机械动力：负载显示",
   "block.stressview.advanced_stressometer": "应力表（高级）",
 
-  "stressview.configuration.title": "负载显示配置",
-  "stressview.configuration.section.stressview.common.toml": "Example Mod Configs",
-  "stressview.configuration.section.stressview.common.toml.title": "Example Mod Configs",
-  "stressview.configuration.items": "Item List",
-  "stressview.configuration.logDirtBlock": "Log Dirt Block",
-  "stressview.configuration.magicNumberIntroduction": "Magic Number Text",
-  "stressview.configuration.magicNumber": "Magic Number",
-
   "stressview.gui.stressometer.producing": "产出",
   "stressview.gui.stressometer.consuming": "消耗"
 }
